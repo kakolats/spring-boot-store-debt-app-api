@@ -16,7 +16,7 @@ public class PaymentController {
     private final IPaymentService paymentService;
 
     @PostMapping("/{debtId}")
-    public ResponseEntity<Payment> createPayment(@PathVariable Long debtId, @RequestBody Payment payment) throws EntityNotFoundException {
+    public ResponseEntity<Payment> createPayment(@PathVariable Long debtId, @RequestBody Payment payment) throws EntityNotFoundException,IllegalArgumentException {
         Payment payment1 = paymentService.createPayment(debtId,payment);
         return ResponseEntity.ok(payment1);
     }

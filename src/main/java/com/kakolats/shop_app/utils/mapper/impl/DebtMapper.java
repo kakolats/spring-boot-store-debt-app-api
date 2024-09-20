@@ -22,7 +22,7 @@ public class DebtMapper implements IDebtMapper {
         debtDTO.setAmount(debt.getAmount());
         debtDTO.setDate(debt.getDate());
         debtDTO.setPaid(debt.getPaid());
-        final Integer[] remaining = {debt.getAmount()};
+        /*final Integer[] remaining = {debt.getAmount()};
         if(debt.getPayments().isEmpty()){
             debtDTO.setAmountRemaining(remaining[0]);
         }else{
@@ -30,7 +30,8 @@ public class DebtMapper implements IDebtMapper {
                 remaining[0] = remaining[0] - payment.getAmount();
             });
             debtDTO.setAmountRemaining(remaining[0]);
-        }
+        }*/
+        debtDTO.setAmountRemaining(debt.calculateRemaining());
         return debtDTO;
     }
 }

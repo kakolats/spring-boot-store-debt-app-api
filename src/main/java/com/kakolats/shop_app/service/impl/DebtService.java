@@ -41,6 +41,6 @@ public class DebtService implements IDebtService {
     @Override
     public Debt getOnebyId(Long id) throws EntityNotFoundException {
         Optional<Debt> debt = debtRepository.findById(id);
-        return debt.orElseThrow(() -> new EntityNotFoundException("No Debt found with id: "+ id));
+        return debt.orElseThrow(() -> new EntityNotFoundException("Aucune dette n\'a été trouvée avec l\'id: "+ id));
     }
 }

@@ -20,10 +20,18 @@ public class PaymentService implements IPaymentService {
     private final IDebtService debtService;
 
     @Override
-    public Payment createPayment(Long debtId, Payment payment) throws EntityNotFoundException {
+    public Payment createPayment(Long debtId, Payment payment) throws EntityNotFoundException,IllegalArgumentException {
         Debt debt = debtService.getOnebyId(debtId);
+        if(debt.calculateRemaining()<payment.getAmount()){
+            throw new IllegalArgumentException("Le montant du paiement est trop élévé");
+        }
         payment.setDebt(debt);
-        return paymentRepository.save(payment);
+        Payment payment1 = paymentRepository.save(payment);
+        if(debt.calculateRemaining()-payment1.getAmount()==0){
+            debt.setPaid(Boolean.TRUE);
+            debtService.updateDebt(debt);
+        }
+        return payment1;
     }
 
     @Override

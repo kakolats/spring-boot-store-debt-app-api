@@ -24,7 +24,7 @@ public class Payment implements Serializable {
     @JsonIgnore
     private Debt debt;
 
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
 
     private Integer amount;
 }

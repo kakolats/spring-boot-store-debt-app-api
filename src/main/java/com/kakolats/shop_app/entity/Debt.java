@@ -32,4 +32,14 @@ public class Debt implements Serializable {
 
     @OneToMany(mappedBy = "debt", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Payment> payments;
+
+    public Integer calculateRemaining(){
+        final Integer[] remaining = {this.getAmount()};
+        if(!this.getPayments().isEmpty()){
+            this.getPayments().forEach(payment -> {
+                remaining[0] = remaining[0] - payment.getAmount();
+            });
+        }
+        return remaining[0];
+    }
 }
