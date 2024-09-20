@@ -6,6 +6,7 @@ import com.kakolats.shop_app.repository.impl.DebtRepository;
 import com.kakolats.shop_app.repository.impl.PaymentRepository;
 import com.kakolats.shop_app.service.IDebtService;
 import com.kakolats.shop_app.service.IPaymentService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,10 @@ public class PaymentService implements IPaymentService {
     private final IDebtService debtService;
 
     @Override
-    public Payment createPayment(Long debtId, Payment payment) {
+    public Payment createPayment(Long debtId, Payment payment) throws EntityNotFoundException {
         Debt debt = debtService.getOnebyId(debtId);
         payment.setDebt(debt);
-        Payment payment1 = paymentRepository.save(payment);
-        debt.setAmount(debt.getAmount()-payment1.getAmount());
-        debtService.updateDebt(debt);
-        return payment1;
+        return paymentRepository.save(payment);
     }
 
     @Override

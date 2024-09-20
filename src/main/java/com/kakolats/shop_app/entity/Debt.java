@@ -21,14 +21,15 @@ public class Debt implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
 
     private Integer amount;
+    private Boolean paid = Boolean.FALSE;
 
     @JsonIgnore
-    @OneToOne
+    @ManyToOne
     private Client client;
 
-    @OneToMany
+    @OneToMany(mappedBy = "debt", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Payment> payments;
 }

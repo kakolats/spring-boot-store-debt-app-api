@@ -5,10 +5,12 @@ import com.kakolats.shop_app.entity.Debt;
 import com.kakolats.shop_app.repository.impl.DebtRepository;
 import com.kakolats.shop_app.service.IClientService;
 import com.kakolats.shop_app.service.IDebtService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,11 +35,12 @@ public class DebtService implements IDebtService {
 
     @Override
     public List<Debt> getAllUnpaidDebts(Long idClient) {
-        return debtRepository.findDebtsByClientId(idClient);
+        return debtRepository.findDebtsByClientIdAndPaidIsFalse(idClient);
     }
 
     @Override
-    public Debt getOnebyId(Long id) {
-        return debtRepository.findById(id).get();
+    public Debt getOnebyId(Long id) throws EntityNotFoundException {
+        Optional<Debt> debt = debtRepository.findById(id);
+        return debt.orElseThrow(() -> new EntityNotFoundException("No Debt found with id: "+ id));
     }
 }

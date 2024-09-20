@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IClientService {
     Client saveClient(Client client);
+    Client findByTelephone(String telephone);
     Client saveClientWithAccount(ClientUserDTO clientUserDTO,MultipartFile file);
     Client findById(Long id);
     List<Client> getAllClients();

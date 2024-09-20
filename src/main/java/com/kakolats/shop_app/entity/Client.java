@@ -5,7 +5,9 @@ import com.kakolats.shop_app.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @Entity
@@ -13,6 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Client {
 
     @Id
@@ -28,6 +31,12 @@ public class Client {
     @JsonIgnore
     private User user;
 
-    @OneToMany
-    private List<Debt> debts;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Debt> debts = new ArrayList<>();
+
+    public List<Debt> getUnpaidDebts(){
+        return debts.stream()
+                .filter(debt -> !debt.getPaid())
+                .collect(Collectors.toList());
+    }
 }
