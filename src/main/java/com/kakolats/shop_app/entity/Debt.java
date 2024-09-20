@@ -1,5 +1,6 @@
 package com.kakolats.shop_app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,10 @@ public class Debt implements Serializable {
     private LocalDateTime date;
 
     private Integer amount;
+
+    @JsonIgnore
+    @OneToOne
+    private Client client;
 
     @OneToMany
     private List<Payment> payments;

@@ -10,16 +10,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@RequiredArgsConstructor
 public class PhotoServiceConfiguration {
 
     @Value("${photoservice.implementation}")
     private String photoService;
 
+
+
     private final PhotoServiceCloudinary photoServiceCloudinary;
     private final PhotoServiceFirebase photoServiceFirebase;
 
-
+    @Autowired
+    public PhotoServiceConfiguration(PhotoServiceCloudinary photoServiceCloudinary, PhotoServiceFirebase photoServiceFirebase) {
+        this.photoServiceCloudinary = photoServiceCloudinary;
+        this.photoServiceFirebase = photoServiceFirebase;
+    }
 
     @Bean
     public IPhotoService photoService() {

@@ -1,0 +1,3 @@
+app:
+  photo: cloudinary
+  backup: firebase
