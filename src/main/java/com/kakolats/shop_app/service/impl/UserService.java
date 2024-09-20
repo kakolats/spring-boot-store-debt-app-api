@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
@@ -26,5 +29,11 @@ public class UserService implements IUserService {
         Image imageSaved = imageRepository.save(image);
         user.setImage(imageSaved);
         return userRepository.save(user);
+    }
+
+    public List<User> allUsers() {
+        List<User> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        return users;
     }
 }
