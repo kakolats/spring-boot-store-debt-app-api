@@ -1,7 +1,7 @@
 package com.kakolats.shop_app.configuration;
 
 
-import com.kakolats.shop_app.service.impl.JwtService;
+import com.kakolats.shop_app.service.IJwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,11 +23,11 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
 
-    private final JwtService jwtService;
+    private final IJwtService jwtService;
     private final UserDetailsService userDetailsService;
 
     public JwtAuthenticationFilter(
-            JwtService jwtService,
+            IJwtService jwtService,
             UserDetailsService userDetailsService,
             HandlerExceptionResolver handlerExceptionResolver
     ) {

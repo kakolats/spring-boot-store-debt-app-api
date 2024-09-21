@@ -6,6 +6,7 @@ import com.kakolats.shop_app.entity.Image;
 import com.kakolats.shop_app.entity.User;
 import com.kakolats.shop_app.repository.impl.ImageRepository;
 import com.kakolats.shop_app.repository.impl.UserRepository;
+import com.kakolats.shop_app.service.IAuthenticationService;
 import com.kakolats.shop_app.service.IPhotoService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class AuthenticationService {
+public class AuthenticationService implements IAuthenticationService {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
@@ -37,6 +38,7 @@ public class AuthenticationService {
         this.photoService = photoService;
     }
 
+    @Override
     public User signup(RegisterUserDto input, MultipartFile file) {
         User user = new User();
         user.setEmail(input.getEmail());
@@ -51,6 +53,7 @@ public class AuthenticationService {
         return userRepository.save(user);
     }
 
+    @Override
     public User authenticate(LoginUserDto input) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
