@@ -4,6 +4,7 @@ import com.kakolats.shop_app.dto.LoginUserDto;
 import com.kakolats.shop_app.dto.RegisterUserDto;
 import com.kakolats.shop_app.entity.LoginResponse;
 import com.kakolats.shop_app.entity.User;
+import com.kakolats.shop_app.enums.Role;
 import com.kakolats.shop_app.service.impl.AuthenticationService;
 import com.kakolats.shop_app.service.impl.JwtService;
 import lombok.extern.log4j.Log4j2;
@@ -26,6 +27,7 @@ public class AuthentificationController {
 
     @PostMapping(value = "/signup", consumes = {"multipart/form-data"})
     public ResponseEntity<User> register(@RequestPart("user") RegisterUserDto registerUserDto,@RequestPart("file") MultipartFile file) {
+        registerUserDto.setRole(Role.BOUTIQUIER);
         User registeredUser = authentificationService.signup(registerUserDto,file);
         return ResponseEntity.ok(registeredUser);
     }

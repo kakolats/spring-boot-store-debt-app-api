@@ -48,6 +48,7 @@ public class ClientService implements IClientService {
             registerUserDto.setEmail(clientUserDTO.getEmail());
             registerUserDto.setPassword(clientUserDTO.getPassword());
             registerUserDto.setLogin(clientUserDTO.getLogin());
+            registerUserDto.setRole(Role.CLIENT);
             //user.setRole(Role.CLIENT);
             //User userSaved = userService.saveUser(user,file);
             User userSaved = authenticationService.signup(registerUserDto,file);
