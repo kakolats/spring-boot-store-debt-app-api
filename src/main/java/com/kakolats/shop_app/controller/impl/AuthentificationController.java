@@ -6,12 +6,12 @@ import com.kakolats.shop_app.entity.LoginResponse;
 import com.kakolats.shop_app.entity.User;
 import com.kakolats.shop_app.service.impl.AuthenticationService;
 import com.kakolats.shop_app.service.impl.JwtService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+@Log4j2
 @RequestMapping("/auth")
 @RestController
 public class AuthentificationController {
@@ -24,10 +24,9 @@ public class AuthentificationController {
         this.authentificationService = authenticationService;
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authentificationService.signup(registerUserDto);
-
+    @PostMapping(value = "/signup", consumes = {"multipart/form-data"})
+    public ResponseEntity<User> register(@RequestPart("user") RegisterUserDto registerUserDto,@RequestPart("file") MultipartFile file) {
+        User registeredUser = authentificationService.signup(registerUserDto,file);
         return ResponseEntity.ok(registeredUser);
     }
 

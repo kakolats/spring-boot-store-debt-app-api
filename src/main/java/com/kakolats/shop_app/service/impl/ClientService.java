@@ -1,6 +1,7 @@
 package com.kakolats.shop_app.service.impl;
 
 import com.kakolats.shop_app.dto.ClientUserDTO;
+import com.kakolats.shop_app.dto.RegisterUserDto;
 import com.kakolats.shop_app.entity.Client;
 import com.kakolats.shop_app.entity.Image;
 import com.kakolats.shop_app.entity.User;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class ClientService implements IClientService {
     private final ClientRepository clientRepository;
     private final IUserService userService;
+    private final AuthenticationService authenticationService;
 
     @Override
     public Client saveClient(Client client) {
@@ -41,9 +43,14 @@ public class ClientService implements IClientService {
         client.setSurname(clientUserDTO.getSurname());
         client.setTelephone(clientUserDTO.getTelephone());
         if(!clientUserDTO.getEmail().isEmpty()&&!clientUserDTO.getLogin().isEmpty()&&!clientUserDTO.getPassword().isEmpty()){
-            User user = new User(clientUserDTO.getEmail(), clientUserDTO.getLogin(), clientUserDTO.getPassword());
-            user.setRole(Role.CLIENT);
-            User userSaved = userService.saveUser(user,file);
+           // User user = new User(clientUserDTO.getEmail(), clientUserDTO.getLogin(), clientUserDTO.getPassword());
+            RegisterUserDto registerUserDto = new RegisterUserDto();
+            registerUserDto.setEmail(clientUserDTO.getEmail());
+            registerUserDto.setPassword(clientUserDTO.getPassword());
+            registerUserDto.setLogin(clientUserDTO.getLogin());
+            //user.setRole(Role.CLIENT);
+            //User userSaved = userService.saveUser(user,file);
+            User userSaved = authenticationService.signup(registerUserDto,file);
             if(userSaved!=null){
                 client.setUser(userSaved);
                 client.setHasAccount(true);
