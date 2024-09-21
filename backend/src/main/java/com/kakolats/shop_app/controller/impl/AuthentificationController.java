@@ -9,6 +9,7 @@ import com.kakolats.shop_app.service.IAuthenticationService;
 import com.kakolats.shop_app.service.IJwtService;
 import com.kakolats.shop_app.service.impl.AuthenticationService;
 import com.kakolats.shop_app.service.impl.JwtService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,14 +36,15 @@ public class AuthentificationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) throws EntityNotFoundException {
         User authenticatedUser = authentificationService.authenticate(loginUserDto);
-
+        //log.info("LOGIN CALLED !!!! : {}",authenticatedUser);
         String jwtToken = jwtService.generateToken(authenticatedUser);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
+        loginResponse.setRole(authenticatedUser.getRole());
 
         return ResponseEntity.ok(loginResponse);
     }

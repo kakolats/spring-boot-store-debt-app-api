@@ -1,11 +1,9 @@
 package com.kakolats.shop_app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kakolats.shop_app.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +19,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class User implements Serializable, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,6 +47,7 @@ public class User implements Serializable, UserDetails {
     private Client client;
 
     @OneToMany(mappedBy = "boutiquier", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Client> clients;
 
     @Enumerated(EnumType.STRING)

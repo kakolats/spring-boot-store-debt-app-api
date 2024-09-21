@@ -8,13 +8,18 @@ import com.kakolats.shop_app.repository.impl.ImageRepository;
 import com.kakolats.shop_app.repository.impl.UserRepository;
 import com.kakolats.shop_app.service.IAuthenticationService;
 import com.kakolats.shop_app.service.IPhotoService;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Service
+@Log4j2
 public class AuthenticationService implements IAuthenticationService {
     private final UserRepository userRepository;
 
@@ -43,7 +48,7 @@ public class AuthenticationService implements IAuthenticationService {
         User user = new User();
         user.setEmail(input.getEmail());
         user.setLogin(input.getLogin());
-        //user.setRole(input.getRole());
+        user.setRole(input.getRole());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         String imageLink = photoService.saveImage(file);
         Image image = new Image();
@@ -54,15 +59,15 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     @Override
-    public User authenticate(LoginUserDto input) {
+    public User authenticate(LoginUserDto input) throws EntityNotFoundException{
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         input.getLogin(),
                         input.getPassword()
                 )
         );
-
-        return userRepository.findByLogin(input.getLogin())
-                .orElseThrow();
+        //log.info("INPUT : {}",input);
+        Optional<User> user = userRepository.findByLogin(input.getLogin());
+        return user.orElseThrow(()-> new EntityNotFoundException("No User found with login "+ input.getLogin()));
     }
 }
