@@ -34,6 +34,10 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Debt> debts = new ArrayList<>();
 
+    @JsonIgnore
+    @ManyToOne
+    private User boutiquier;
+
     public List<Debt> getUnpaidDebts(){
         return debts.stream()
                 .filter(debt -> !debt.getPaid())

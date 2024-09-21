@@ -47,6 +47,9 @@ public class User implements Serializable, UserDetails {
     @OneToOne
     private Client client;
 
+    @OneToMany(mappedBy = "boutiquier", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Client> clients;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

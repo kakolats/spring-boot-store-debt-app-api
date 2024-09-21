@@ -31,17 +31,24 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public Client findByTelephone(String telephone) throws EntityNotFoundException {
-        Optional<Client> client = clientRepository.findByTelephone(telephone);
+    public Client createClient(Client client, User boutiquier) {
+        client.setBoutiquier(boutiquier);
+        return clientRepository.save(client);
+    }
+
+    @Override
+    public Client findByTelephone(String telephone,Long idBoutiquier) throws EntityNotFoundException {
+        Optional<Client> client = clientRepository.findByTelephoneAnAndBoutiquierId(telephone,idBoutiquier);
         return client.orElseThrow(() -> new EntityNotFoundException("No Client found with phone number "+ telephone));
     }
 
     @Override
-    public Client saveClientWithAccount(ClientUserDTO clientUserDTO,MultipartFile file) {
+    public Client saveClientWithAccount(ClientUserDTO clientUserDTO,User boutiquier,MultipartFile file) {
         Client client = new Client();
         client.setAdresse(clientUserDTO.getAdresse());
         client.setSurname(clientUserDTO.getSurname());
         client.setTelephone(clientUserDTO.getTelephone());
+        client.setBoutiquier(boutiquier);
         if(!clientUserDTO.getEmail().isEmpty()&&!clientUserDTO.getLogin().isEmpty()&&!clientUserDTO.getPassword().isEmpty()){
            // User user = new User(clientUserDTO.getEmail(), clientUserDTO.getLogin(), clientUserDTO.getPassword());
             RegisterUserDto registerUserDto = new RegisterUserDto();
@@ -66,7 +73,7 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public List<Client> getAllClients() {
-        return clientRepository.findAll();
+    public List<Client> getAllClients(Long idBoutiquier) {
+        return clientRepository.findByBoutiquierId(idBoutiquier);
     }
 }
