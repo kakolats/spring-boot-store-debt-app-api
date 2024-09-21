@@ -38,7 +38,7 @@ public class ClientService implements IClientService {
 
     @Override
     public Client findByTelephone(String telephone,Long idBoutiquier) throws EntityNotFoundException {
-        Optional<Client> client = clientRepository.findByTelephoneAnAndBoutiquierId(telephone,idBoutiquier);
+        Optional<Client> client = clientRepository.findByTelephoneAndBoutiquierId(telephone,idBoutiquier);
         return client.orElseThrow(() -> new EntityNotFoundException("No Client found with phone number "+ telephone));
     }
 
