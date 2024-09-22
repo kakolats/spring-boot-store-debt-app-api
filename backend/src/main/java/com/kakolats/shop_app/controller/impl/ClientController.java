@@ -46,14 +46,7 @@ public class ClientController {
     public ResponseEntity<List<ClientDTO>> getAllClients(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
-        List<Client> clients = clientService.getAllClients(currentUser.getId());
-        List<ClientDTO> clientDTOS = new ArrayList<ClientDTO>();
-        if(!clients.isEmpty()){
-            clients.forEach(client -> {
-                clientDTOS.add(clientMapper.clientToClientDto(client));
-            });
-        }
-        return ResponseEntity.ok(clientDTOS);
+        return ResponseEntity.ok(clientService.getAllClients(currentUser.getId()));
     }
 
     @GetMapping("/telephone/{telephone}")

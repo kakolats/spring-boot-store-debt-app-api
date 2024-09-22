@@ -1,5 +1,6 @@
 package com.kakolats.shop_app.service.impl;
 
+import com.kakolats.shop_app.dto.ClientDTO;
 import com.kakolats.shop_app.dto.ClientUserDTO;
 import com.kakolats.shop_app.dto.RegisterUserDto;
 import com.kakolats.shop_app.entity.Client;
@@ -10,11 +11,14 @@ import com.kakolats.shop_app.repository.impl.ClientRepository;
 import com.kakolats.shop_app.service.IClientService;
 import com.kakolats.shop_app.service.IPhotoService;
 import com.kakolats.shop_app.service.IUserService;
+import com.kakolats.shop_app.utils.mapper.IClientMapper;
+import com.kakolats.shop_app.utils.mapper.IDebtMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +28,7 @@ public class ClientService implements IClientService {
     private final ClientRepository clientRepository;
     private final IUserService userService;
     private final AuthenticationService authenticationService;
+    private final IClientMapper clientMapper;
 
     @Override
     public Client saveClient(Client client) {
@@ -84,7 +89,14 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public List<Client> getAllClients(Long idBoutiquier) {
-        return clientRepository.findByBoutiquierId(idBoutiquier);
+    public List<ClientDTO> getAllClients(Long idBoutiquier) {
+        List<Client> clients = clientRepository.findByBoutiquierId(idBoutiquier);
+        List<ClientDTO> clientDTOS = new ArrayList<ClientDTO>();
+        if(!clients.isEmpty()){
+            clients.forEach(client -> {
+                clientDTOS.add(clientMapper.clientToClientDto(client));
+            });
+        }
+        return clientDTOS;
     }
 }

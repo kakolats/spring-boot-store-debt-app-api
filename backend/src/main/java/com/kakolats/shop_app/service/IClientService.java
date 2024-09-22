@@ -1,5 +1,6 @@
 package com.kakolats.shop_app.service;
 
+import com.kakolats.shop_app.dto.ClientDTO;
 import com.kakolats.shop_app.dto.ClientUserDTO;
 import com.kakolats.shop_app.entity.Client;
 import com.kakolats.shop_app.entity.User;
@@ -15,5 +16,5 @@ public interface IClientService {
     Client findByUser(Long userId);
     Client saveClientWithAccount(ClientUserDTO clientUserDTO,User boutiquier,MultipartFile file);
     Client findById(Long id);
-    List<Client> getAllClients(Long idBoutiquier);
+    List<ClientDTO> getAllClients(Long idBoutiquier);
 }

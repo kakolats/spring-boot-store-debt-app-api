@@ -1,14 +1,17 @@
 package com.kakolats.shop_app.service.impl;
 
+import com.kakolats.shop_app.dto.DebtDTO;
 import com.kakolats.shop_app.entity.Client;
 import com.kakolats.shop_app.entity.Debt;
 import com.kakolats.shop_app.repository.impl.DebtRepository;
 import com.kakolats.shop_app.service.IClientService;
 import com.kakolats.shop_app.service.IDebtService;
+import com.kakolats.shop_app.utils.mapper.IDebtMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,7 @@ public class DebtService implements IDebtService {
 
     private final DebtRepository debtRepository;
     private final IClientService clientService;
+    private final IDebtMapper debtMapper;
 
     @Override
     public Debt createDebt(Long idClient, Debt debt) {
@@ -34,14 +38,28 @@ public class DebtService implements IDebtService {
     }
 
     @Override
-    public List<Debt> getAllUnpaidDebts(Long idClient) {
-        return debtRepository.findDebtsByClientIdAndPaidIsFalse(idClient);
+    public List<DebtDTO> getAllUnpaidDebts(Long idClient) {
+        List<Debt> debts = debtRepository.findDebtsByClientIdAndPaidIsFalse(idClient);
+        List<DebtDTO> debtDTOS = new ArrayList<>();
+        if(!debts.isEmpty()){
+            debts.forEach(debt -> {
+                debtDTOS.add(debtMapper.debtToDebtDto(debt));
+            });
+        }
+        return debtDTOS;
     }
 
     @Override
-    public List<Debt> getAllUnpaidDebtsByConnectedUser(Long idUser) {
+    public List<DebtDTO> getAllUnpaidDebtsByConnectedUser(Long idUser) {
         Client client = clientService.findByUser(idUser);
-        return debtRepository.findDebtsByClientIdAndPaidIsFalse(client.getId());
+        List<Debt> debts = debtRepository.findDebtsByClientIdAndPaidIsFalse(client.getId());
+        List<DebtDTO> debtDTOS = new ArrayList<>();
+        if(!debts.isEmpty()){
+            debts.forEach(debt -> {
+                debtDTOS.add(debtMapper.debtToDebtDto(debt));
+            });
+        }
+        return debtDTOS;
     }
 
     @Override

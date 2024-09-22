@@ -22,21 +22,13 @@ import java.util.List;
 public class DebtController {
 
     private final IDebtService debtService;
-    private final IDebtMapper debtMapper;
 
     @GetMapping("/me")
     public ResponseEntity<List<DebtDTO>> getAllByClientUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
         log.info("Current User debts : {}",currentUser);
-        List<Debt> debts = debtService.getAllUnpaidDebtsByConnectedUser(currentUser.getId());
-        List<DebtDTO> debtDTOS = new ArrayList<>();
-        if(!debts.isEmpty()){
-            debts.forEach(debt -> {
-                debtDTOS.add(debtMapper.debtToDebtDto(debt));
-            });
-        }
-        return ResponseEntity.ok(debtDTOS);
+        return ResponseEntity.ok(debtService.getAllUnpaidDebtsByConnectedUser(currentUser.getId()));
     }
 
     @PostMapping("/{clientId}")
@@ -48,13 +40,6 @@ public class DebtController {
 
     @GetMapping("/{clientId}")
     public ResponseEntity<List<DebtDTO>> getAllByClient(@PathVariable Long clientId){
-        List<Debt> debts = debtService.getAllUnpaidDebts(clientId);
-        List<DebtDTO> debtDTOS = new ArrayList<>();
-        if(!debts.isEmpty()){
-            debts.forEach(debt -> {
-                debtDTOS.add(debtMapper.debtToDebtDto(debt));
-            });
-        }
-        return ResponseEntity.ok(debtDTOS);
+        return ResponseEntity.ok(debtService.getAllUnpaidDebts(clientId));
     }
 }

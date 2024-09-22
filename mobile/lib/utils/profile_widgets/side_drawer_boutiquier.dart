@@ -32,13 +32,13 @@ class SideDrawerBoutiquier extends StatelessWidget{
               Get.offAllNamed('/boutiquier');
             },
           ),
-          ListTile(
+          /*ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Rechercher par téléphone'),
             onTap: () {
               authController.logout();
             },
-          ),
+          ),*/
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Deconnexion'),
