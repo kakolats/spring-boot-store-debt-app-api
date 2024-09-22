@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:show_debt_app/app/data/models/client_model.dart';
 import 'package:show_debt_app/app/data/models/debt_model.dart';
 
 import '../../../../data/repositories/boutiquier_repository.dart';

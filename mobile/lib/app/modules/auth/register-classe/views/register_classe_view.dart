@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:show_debt_app/utils/common_widgets/gradient_background.dart';
+import 'package:show_debt_app/utils/profile_widgets/side_drawer_boutiquier.dart';
 
 import '../controllers/register_classe_controller.dart';
 
@@ -10,6 +11,11 @@ class RegisterClasseView extends GetView<RegisterClasseController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Création de client"),
+        centerTitle: true,
+      ),
+      drawer: SideDrawerBoutiquier(),
       body: ListView(
         padding: EdgeInsets.zero,
         children: [

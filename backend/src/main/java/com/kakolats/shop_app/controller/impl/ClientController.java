@@ -64,5 +64,10 @@ public class ClientController {
         return ResponseEntity.ok(clientMapper.clientToClientDto(client));
     }
 
+    @GetMapping("{idClient}")
+    public ResponseEntity<ClientDTO> getClientByTelephone(@PathVariable Long idClient) {
+        Client client = clientService.findById(idClient);
+        return ResponseEntity.ok(clientMapper.clientToClientDto(client));
+    }
 
 }

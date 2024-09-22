@@ -12,6 +12,8 @@ import '../modules/auth/views/auth_view.dart';
 import '../modules/boutiquier/bindings/boutiquier_binding.dart';
 import '../modules/boutiquier/dettes/bindings/dettes_binding.dart';
 import '../modules/boutiquier/dettes/views/dettes_view.dart';
+import '../modules/boutiquier/payment/bindings/payment_binding.dart';
+import '../modules/boutiquier/payment/views/payment_view.dart';
 import '../modules/boutiquier/views/boutiquier_view.dart';
 import '../modules/client/bindings/client_binding.dart';
 import '../modules/client/views/client_view.dart';
@@ -62,6 +64,11 @@ class AppPages {
           name: _Paths.DETTES,
           page: () => const DettesView(),
           binding: DettesBinding(),
+        ),
+        GetPage(
+          name: _Paths.PAYMENT,
+          page: () => const PaymentView(),
+          binding: PaymentBinding(),
         ),
       ],
     ),

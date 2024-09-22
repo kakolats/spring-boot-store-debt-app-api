@@ -31,6 +31,11 @@ public class ClientService implements IClientService {
     }
 
     @Override
+    public Client getById(Long id) {
+        return clientRepository.findById(id).get();
+    }
+
+    @Override
     public Client createClient(Client client, User boutiquier) {
         client.setBoutiquier(boutiquier);
         return clientRepository.save(client);

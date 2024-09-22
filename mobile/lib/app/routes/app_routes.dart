@@ -11,6 +11,7 @@ abstract class Routes {
   static const REGISTER = _Paths.AUTH + _Paths.REGISTER;
   static const DETTES = _Paths.BOUTIQUIER + _Paths.DETTES;
   static const REGISTER_CLASSE = _Paths.AUTH + _Paths.REGISTER_CLASSE;
+  static const PAYMENT = _Paths.BOUTIQUIER + _Paths.PAYMENT;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const DETTES = '/dettes/:id';
   static const REGISTER_CLASSE = '/register-classe';
+  static const PAYMENT = '/payment';
 }

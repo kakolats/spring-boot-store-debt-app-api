@@ -1,3 +1,4 @@
+import 'package:show_debt_app/app/data/models/client_model.dart';
 import 'package:show_debt_app/app/data/models/debt_model.dart';
 import 'package:show_debt_app/app/modules/client/providers/client_provider.dart';
 
@@ -16,5 +17,15 @@ class ClientRepository{
       return debts;
     }
     return [];
+  }
+
+  Future<ClientModel?> getById(String id) async {
+    final response = await _clientProvider.getClientById(id);
+    print(response);
+    if (response.statusCode == 200) {
+      ClientModel clientModel = response.body;
+      return clientModel;
+    }
+    return null;
   }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface IClientService {
     Client saveClient(Client client);
+    Client getById(Long id);
     Client createClient(Client client, User boutiquier);
     Client findByTelephone(String telephone,Long idBoutiquier);
     Client findByUser(Long userId);
