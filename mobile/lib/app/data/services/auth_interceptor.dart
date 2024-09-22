@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthInterceptor extends GetConnect {
   @override
   void onInit() {
-    httpClient.baseUrl = 'https://yourapi.com'; // Set your API base URL here
+    httpClient.baseUrl = 'http://10.0.2.2:8080'; // Set your API base URL here
     httpClient.addRequestModifier<void>((request) async {
       final token = await _getToken();
       if (token != null) {

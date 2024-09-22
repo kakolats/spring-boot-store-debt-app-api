@@ -43,6 +43,12 @@ public class ClientService implements IClientService {
     }
 
     @Override
+    public Client findByUser(Long userId) {
+        Optional<Client> client = clientRepository.findClientByUserId(userId);
+        return client.orElseThrow(() -> new EntityNotFoundException("Aucun client associé à l\'utilisateur connecté "));
+    }
+
+    @Override
     public Client saveClientWithAccount(ClientUserDTO clientUserDTO,User boutiquier,MultipartFile file) {
         Client client = new Client();
         client.setAdresse(clientUserDTO.getAdresse());

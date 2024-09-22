@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<Client,Long> {
     Optional<Client> findByTelephoneAndBoutiquierId(String telephone,Long id);
     List<Client> findByBoutiquierId(Long id);
+    Optional<Client> findClientByUserId(Long userId);
 }
