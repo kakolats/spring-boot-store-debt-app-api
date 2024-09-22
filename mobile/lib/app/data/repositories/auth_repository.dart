@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:show_debt_app/app/data/models/register_client_model.dart';
 import 'package:show_debt_app/app/data/models/register_model.dart';
 import 'package:show_debt_app/app/modules/auth/providers/register_provider.dart';
 
@@ -21,6 +22,14 @@ class AuthRepository {
 
   Future<String?> register(RegisterModel registerModel,File file) async {
     final response = await _registerProvider.register(registerModel,file);
+    if (response.statusCode == 200) {
+      return response.statusMessage;
+    }
+    return null;
+  }
+
+  Future<String?> registerClient(RegisterClientModel registerModel,File file) async {
+    final response = await _registerProvider.registerClient(registerModel,file);
     if (response.statusCode == 200) {
       return response.statusMessage;
     }

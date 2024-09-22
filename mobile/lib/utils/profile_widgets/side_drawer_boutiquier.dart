@@ -16,20 +16,20 @@ class SideDrawerBoutiquier extends StatelessWidget{
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
-            child: Text('Menu client'),
+            child: Text('Menu boutiquier'),
           ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Créer un client'),
             onTap: () {
-              authController.logout();
+              Get.offAllNamed('/auth/register-classe');
             },
           ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Liste des clients'),
             onTap: () {
-              authController.logout();
+              Get.offAllNamed('/boutiquier');
             },
           ),
           ListTile(
