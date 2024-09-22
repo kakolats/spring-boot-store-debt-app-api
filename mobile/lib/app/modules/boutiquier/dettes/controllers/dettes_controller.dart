@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:show_debt_app/app/data/models/client_model.dart';
 import 'package:show_debt_app/app/data/models/debt_model.dart';
@@ -7,8 +8,12 @@ import '../../../../data/repositories/boutiquier_repository.dart';
 class DettesController extends GetxController {
   //TODO: Implement DettesController
   late final String id;
+  RxBool isLoading = false.obs;
+  RxString errorMessage = ''.obs;
   final debts = <DebtModel>[].obs;
   final count = 0.obs;
+  final createDebtFormKey = GlobalKey<FormState>();
+  TextEditingController amountController = TextEditingController();
   @override
   void onInit() {
     super.onInit();
@@ -25,6 +30,22 @@ class DettesController extends GetxController {
     } catch (e) {
       print('Error fetching clients: $e');
     }
+  }
+
+  void addDebt(){
+    if (isLoading.value || createDebtFormKey.currentState?.validate() != true){
+      print('no go');
+      return;
+    }
+    isLoading.value = true;
+    var response = BoutiquierRepository().createDebt(id, amountController.text);
+    if(response!=null){
+      loadDebts(id);
+    }else{
+      return;
+    }
+    isLoading(false);
+
   }
 
   @override

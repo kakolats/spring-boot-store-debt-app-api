@@ -21,7 +21,7 @@ class ClientRepository{
 
   Future<ClientModel?> getById(String id) async {
     final response = await _clientProvider.getClientById(id);
-    print(response);
+    //print(response);
     if (response.statusCode == 200) {
       ClientModel clientModel = response.body;
       return clientModel;

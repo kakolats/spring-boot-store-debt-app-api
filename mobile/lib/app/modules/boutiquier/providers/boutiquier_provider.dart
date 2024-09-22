@@ -36,4 +36,51 @@ class BoutiquierProvider extends GetConnect {
       return response;
     }
   }
+
+  Future<Response> getDebtPayments(String id) async{
+    final response = await connect.get(
+      '/payments/$id',  // Login API endpoint
+    );
+    if (response.status.hasError) {
+      return Response(statusCode: response.statusCode, statusText: response.statusText);
+    } else {
+      // Assuming the token is returned in response body under 'token' key
+      //String token = response.body['token'];
+      // Store the token using SharedPreferences or securely using flutter_secure_storage
+      //await saveToken(token);
+      return response;
+    }
+  }
+
+  Future<Response> createPayment(String id,String amount) async{
+    final response = await connect.post(
+        '/payments/$id',
+        {'amount': int.parse(amount)}// Login API endpoint
+    );
+    if (response.status.hasError) {
+      return Response(statusCode: response.statusCode, statusText: response.statusText);
+    } else {
+      // Assuming the token is returned in response body under 'token' key
+      //String token = response.body['token'];
+      // Store the token using SharedPreferences or securely using flutter_secure_storage
+      //await saveToken(token);
+      return response;
+    }
+  }
+
+  Future<Response> createDebt(String id,String amount) async{
+    final response = await connect.post(
+      '/debts/$id',
+        {'amount': int.parse(amount)}// Login API endpoint
+    );
+    if (response.status.hasError) {
+      return Response(statusCode: response.statusCode, statusText: response.statusText);
+    } else {
+      // Assuming the token is returned in response body under 'token' key
+      //String token = response.body['token'];
+      // Store the token using SharedPreferences or securely using flutter_secure_storage
+      //await saveToken(token);
+      return response;
+    }
+  }
 }

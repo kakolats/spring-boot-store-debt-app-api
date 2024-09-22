@@ -24,5 +24,5 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const DETTES = '/dettes/:id';
   static const REGISTER_CLASSE = '/register-classe';
-  static const PAYMENT = '/payment';
+  static const PAYMENT = '/payment/:id';
 }
